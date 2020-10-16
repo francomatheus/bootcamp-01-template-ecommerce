@@ -27,6 +27,14 @@ public class UsuarioRequest {
         return new Usuario(this.login, this.senha);
     }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public String getLogin() {
         return login;
     }
