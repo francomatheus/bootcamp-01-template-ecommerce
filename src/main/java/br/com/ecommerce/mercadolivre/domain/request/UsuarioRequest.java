@@ -1,16 +1,17 @@
 package br.com.ecommerce.mercadolivre.domain.request;
 
+import br.com.ecommerce.mercadolivre.annotation.ValorUnico;
 import br.com.ecommerce.mercadolivre.domain.model.Usuario;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Base64;
 
 public class UsuarioRequest {
 
     @NotBlank
     @Email
+    @ValorUnico(className = Usuario.class, fieldName = "login")
     private String login;
     @NotBlank
     @Size(min = 6)
