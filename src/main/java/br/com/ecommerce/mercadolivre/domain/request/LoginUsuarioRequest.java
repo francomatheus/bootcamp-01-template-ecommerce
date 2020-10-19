@@ -1,5 +1,7 @@
 package br.com.ecommerce.mercadolivre.domain.request;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -22,5 +24,9 @@ public class LoginUsuarioRequest {
                 "login='" + login + '\'' +
                 ", senha='" + senha + '\'' +
                 '}';
+    }
+
+    public UsernamePasswordAuthenticationToken toAuthentication() {
+        return new UsernamePasswordAuthenticationToken(this.login,this.senha);
     }
 }

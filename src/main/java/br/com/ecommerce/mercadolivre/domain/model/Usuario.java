@@ -1,5 +1,6 @@
 package br.com.ecommerce.mercadolivre.domain.model;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -88,5 +89,9 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public UsernamePasswordAuthenticationToken toAuthentication() {
+        return new UsernamePasswordAuthenticationToken(this.login, null, this.getAuthorities());
     }
 }
