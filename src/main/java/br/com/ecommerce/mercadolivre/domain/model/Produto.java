@@ -31,19 +31,23 @@ public class Produto {
     @OneToMany(cascade = CascadeType.PERSIST)
     private Set<CaracteristicaProduto> caracteristicaProduto;
     @NotNull
-    @OneToOne
+    @ManyToOne
     private Categoria categoria;
+
+    @ManyToOne @NotNull
+    private Usuario usuario;
 
     public Produto() {
     }
 
-    public Produto(@NotBlank String nome, @Positive @NotNull BigDecimal preco, @Positive @NotNull Integer quantidadeDisponivel, @NotBlank @Length(max = 1000) String descricao, Set<CaracteristicaProduto> caracteristicaProduto, Categoria categoria) {
+    public Produto(@NotBlank String nome, @NotNull @Positive BigDecimal preco, @NotNull @Positive Integer quantidadeDisponivel, @NotBlank String descricao, @Size(min = 3) @NotNull Set<CaracteristicaProduto> caracteristicaProduto, @NotNull Categoria categoria, @NotNull Usuario usuario) {
         this.nome = nome;
         this.preco = preco;
         this.quantidadeDisponivel = quantidadeDisponivel;
         this.descricao = descricao;
         this.caracteristicaProduto = caracteristicaProduto;
         this.categoria = categoria;
+        this.usuario = usuario;
     }
 
     public Long getId() {
@@ -76,6 +80,10 @@ public class Produto {
 
     public Categoria getCategoria() {
         return categoria;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     @Override

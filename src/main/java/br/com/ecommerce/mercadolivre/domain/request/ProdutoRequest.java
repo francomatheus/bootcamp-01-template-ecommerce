@@ -4,7 +4,10 @@ import br.com.ecommerce.mercadolivre.annotation.ValorValido;
 import br.com.ecommerce.mercadolivre.domain.model.CaracteristicaProduto;
 import br.com.ecommerce.mercadolivre.domain.model.Categoria;
 import br.com.ecommerce.mercadolivre.domain.model.Produto;
+import br.com.ecommerce.mercadolivre.domain.model.Usuario;
+import br.com.ecommerce.mercadolivre.repository.UsuarioRepository;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
@@ -13,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,6 +35,9 @@ public class ProdutoRequest {
     private String descricao;
     @NotNull @ValorValido(className = Categoria.class)
     private Long categoriaId;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public ProdutoRequest(@NotBlank String nome, @Positive @NotNull BigDecimal preco, @Positive @NotNull Integer quantidadeDisponivel, @Size(min = 3) Set<CaraceristicaProdutoRequest> caracteristicaProduto, @NotBlank @Length(max = 1000) String descricao, @NotNull Long categoriaId) {
         this.nome = nome;
@@ -89,14 +96,17 @@ public class ProdutoRequest {
         this.categoriaId = categoriaId;
     }
 
-    public Produto toModel(EntityManager manager){
+    public Produto toModel(EntityManager manager, String emailDoUsuarioLogado){
         Categoria categoria = manager.find(Categoria.class, this.categoriaId);
+
+        Usuario usuarioByLogin = usuarioRepository.findByLogin(emailDoUsuarioLogado).get();
+
         Set<CaracteristicaProduto> caracteristicaProduto = this.caracteristicaProduto.stream()
                 .map(caraceristicaProdutoRequest -> {
                     return caraceristicaProdutoRequest.toModel();
                 }).collect(Collectors.toSet());
 
-        return new Produto(this.nome,this.preco,this.quantidadeDisponivel,this.descricao,caracteristicaProduto, categoria);
+        return new Produto(this.nome,this.preco,this.quantidadeDisponivel,this.descricao,caracteristicaProduto, categoria, usuarioByLogin);
     }
 
     @Override

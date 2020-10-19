@@ -3,14 +3,8 @@ package br.com.ecommerce.mercadolivre.domain.response;
 import br.com.ecommerce.mercadolivre.domain.model.CaracteristicaProduto;
 import br.com.ecommerce.mercadolivre.domain.model.Categoria;
 import br.com.ecommerce.mercadolivre.domain.model.Produto;
+import br.com.ecommerce.mercadolivre.domain.model.Usuario;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -25,6 +19,7 @@ public class ProdutoResponseDto {
     private String descricao;
     private Set<CaracteristicaProduto> caracteristicaProduto;
     private Categoria categoria;
+    private Usuario usuario;
 
     public ProdutoResponseDto(Produto produto) {
         this.id = produto.getId();
@@ -35,6 +30,7 @@ public class ProdutoResponseDto {
         this.descricao = produto.getDescricao();
         this.caracteristicaProduto = produto.getCaracteristicaProduto();
         this.categoria = produto.getCategoria();
+        this.usuario = produto.getUsuario();
     }
 
     public Long getId() {
@@ -69,6 +65,10 @@ public class ProdutoResponseDto {
         return categoria;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
     @Override
     public String toString() {
         return "ProdutoResponseDto{" +
@@ -80,6 +80,7 @@ public class ProdutoResponseDto {
                 ", descricao='" + descricao + '\'' +
                 ", caracteristicaProduto=" + caracteristicaProduto +
                 ", categoria=" + categoria +
+                ", usuario=" + usuario +
                 '}';
     }
 }

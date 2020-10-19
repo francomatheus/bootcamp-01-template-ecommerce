@@ -1,7 +1,6 @@
 package br.com.ecommerce.mercadolivre.controller;
 
 import br.com.ecommerce.mercadolivre.domain.model.Produto;
-import br.com.ecommerce.mercadolivre.domain.model.Usuario;
 import br.com.ecommerce.mercadolivre.domain.request.ProdutoRequest;
 import br.com.ecommerce.mercadolivre.domain.response.ProdutoResponseDto;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +26,11 @@ public class ProdutoController {
     @PostMapping
     @Transactional
     public ResponseEntity<?> criaProduto(@RequestBody @Valid ProdutoRequest produtoRequest,
-                                         UriComponentsBuilder uriComponentsBuilder){
+                                         UriComponentsBuilder uriComponentsBuilder,
+                                         @AuthenticationPrincipal String usuarioLogado){
 
 
-        Produto produto = produtoRequest.toModel(manager);
+        Produto produto = produtoRequest.toModel(manager, usuarioLogado);
 
         manager.persist(produto);
 
