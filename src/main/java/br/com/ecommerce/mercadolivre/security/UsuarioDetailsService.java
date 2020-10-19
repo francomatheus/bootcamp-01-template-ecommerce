@@ -3,7 +3,6 @@ package br.com.ecommerce.mercadolivre.security;
 import br.com.ecommerce.mercadolivre.domain.model.Usuario;
 import br.com.ecommerce.mercadolivre.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
