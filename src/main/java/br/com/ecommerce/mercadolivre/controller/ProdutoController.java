@@ -1,5 +1,6 @@
 package br.com.ecommerce.mercadolivre.controller;
 
+import br.com.ecommerce.mercadolivre.annotation.ValorValido;
 import br.com.ecommerce.mercadolivre.domain.model.Produto;
 import br.com.ecommerce.mercadolivre.domain.request.ProdutoImagemRequest;
 import br.com.ecommerce.mercadolivre.domain.request.ProdutoRequest;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -28,9 +30,11 @@ public class ProdutoController {
     private EntityManager manager;
 
     @Autowired
+    // +1
     private UsuarioRepository usuarioRepository;
 
     @Autowired
+    // +1
     private StorageFile storageFile;
 
     @PostMapping
@@ -60,7 +64,10 @@ public class ProdutoController {
                                                    @AuthenticationPrincipal String usuarioLogado){
 
         Produto produto = manager.find(Produto.class, id);
-        if(produto.donoDoProduto()==usuarioLogado){
+        // +1
+        Assert.isTrue(produto!=null, "Produto não encontrado no banco de dados!!");
+        // +1
+        if(produto.donoDoProduto()!=usuarioLogado){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Usuário não pode alterar produto, pois não é dono !!!");
         }
 

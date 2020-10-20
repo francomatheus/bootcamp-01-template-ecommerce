@@ -1,12 +1,14 @@
 package br.com.ecommerce.mercadolivre.domain.model;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,9 +38,11 @@ public class Produto {
     private Categoria categoria;
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private Set<ImagemProduto> imagemProduto = new HashSet<>();
-
     @ManyToOne @NotNull
     private Usuario usuario;
+    @Valid @NotNull
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private List<OpiniaoProduto> opiniaoProduto = new ArrayList<>();
 
     public Produto() {
     }
@@ -89,6 +93,14 @@ public class Produto {
         return usuario;
     }
 
+    public Set<ImagemProduto> getImagemProduto() {
+        return imagemProduto;
+    }
+
+    public List<OpiniaoProduto> getOpiniaoProduto() {
+        return opiniaoProduto;
+    }
+
     public String donoDoProduto(){
         return this.usuario.getLogin();
     }
@@ -115,6 +127,12 @@ public class Produto {
         }).collect(Collectors.toSet());
 
         this.imagemProduto.addAll(imagensProduto);
+
+    }
+
+    public void adicionaOpiniaoProduto(OpiniaoProduto opiniaoProduto) {
+
+        this.opiniaoProduto.add(opiniaoProduto);
 
     }
 }
