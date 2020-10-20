@@ -1,5 +1,7 @@
 package br.com.ecommerce.mercadolivre.domain.model;
 
+import br.com.ecommerce.mercadolivre.domain.response.PerguntaSobreProdutoResponseDto;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -36,13 +38,15 @@ public class Produto {
     @NotNull
     @ManyToOne
     private Categoria categoria;
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Set<ImagemProduto> imagemProduto = new HashSet<>();
     @ManyToOne @NotNull
     private Usuario usuario;
     @Valid @NotNull
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
-    private List<OpiniaoProduto> opiniaoProduto = new ArrayList<>();
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private Set<OpiniaoProduto> opiniaoProduto = new HashSet<>();
+    @OneToMany(mappedBy = "produto",cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private List<PerguntaSobreProduto> pergunta = new ArrayList<>();
 
     public Produto() {
     }
@@ -97,12 +101,23 @@ public class Produto {
         return imagemProduto;
     }
 
-    public List<OpiniaoProduto> getOpiniaoProduto() {
+    public Set<OpiniaoProduto> getOpiniaoProduto() {
         return opiniaoProduto;
     }
 
     public String donoDoProduto(){
         return this.usuario.getLogin();
+    }
+
+    public List<PerguntaSobreProduto> getPergunta() {
+        return pergunta;
+    }
+
+    public List<PerguntaSobreProdutoResponseDto> listaDePerguntas(){
+        return this.pergunta.stream()
+                .map(perguntaSobreProduto -> {
+                    return new PerguntaSobreProdutoResponseDto(perguntaSobreProduto);
+                }).collect(Collectors.toList());
     }
 
     @Override
@@ -134,5 +149,13 @@ public class Produto {
 
         this.opiniaoProduto.add(opiniaoProduto);
 
+    }
+
+    public void adicionaPergunta(PerguntaSobreProduto perguntaSobreProduto){
+        this.pergunta.add(perguntaSobreProduto);
+    }
+
+    public List<PerguntaSobreProduto> todasPerguntasSobreProduto(){
+        return this.pergunta;
     }
 }

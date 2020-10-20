@@ -18,7 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @RestController
-@RequestMapping("/v1/usuario")
+@RequestMapping("/v1/usuarios")
 public class UsuarioController {
 
     private static Logger logger = LoggerFactory.getLogger(UsuarioController.class);

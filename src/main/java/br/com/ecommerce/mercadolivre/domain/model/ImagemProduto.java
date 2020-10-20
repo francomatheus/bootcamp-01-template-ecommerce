@@ -12,7 +12,7 @@ public class ImagemProduto {
     private Long id;
     @NotBlank @URL
     private String pathImagem;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Produto produto;
 
     public ImagemProduto() {

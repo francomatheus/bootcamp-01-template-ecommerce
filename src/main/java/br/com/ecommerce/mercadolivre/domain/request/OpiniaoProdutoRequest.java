@@ -3,11 +3,8 @@ package br.com.ecommerce.mercadolivre.domain.request;
 import br.com.ecommerce.mercadolivre.domain.model.OpiniaoProduto;
 import br.com.ecommerce.mercadolivre.domain.model.Produto;
 import br.com.ecommerce.mercadolivre.domain.model.Usuario;
-import br.com.ecommerce.mercadolivre.repository.UsuarioRepository;
-import io.jsonwebtoken.lang.Assert;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.EntityManager;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;

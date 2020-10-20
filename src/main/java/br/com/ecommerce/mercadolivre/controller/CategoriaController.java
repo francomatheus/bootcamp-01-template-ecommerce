@@ -3,6 +3,8 @@ package br.com.ecommerce.mercadolivre.controller;
 import br.com.ecommerce.mercadolivre.domain.model.Categoria;
 import br.com.ecommerce.mercadolivre.domain.request.CategoriaRequest;
 import br.com.ecommerce.mercadolivre.domain.response.CategoriaResponseDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +18,10 @@ import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/v1/categoria")
+@RequestMapping("/v1/categorias")
 public class CategoriaController {
+
+    private static Logger logger = LoggerFactory.getLogger(CategoriaController.class);
 
     @PersistenceContext
     private EntityManager manager;

@@ -15,6 +15,9 @@ public class CaracteristicaProduto {
     @NotBlank
     private String valor;
 
+    public CaracteristicaProduto() {
+    }
+
     public CaracteristicaProduto(@NotBlank String nome, @NotBlank String valor) {
         this.nome = nome;
         this.valor = valor;

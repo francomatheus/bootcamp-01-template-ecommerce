@@ -7,6 +7,8 @@ import br.com.ecommerce.mercadolivre.domain.request.ProdutoRequest;
 import br.com.ecommerce.mercadolivre.domain.response.ProdutoResponseDto;
 import br.com.ecommerce.mercadolivre.repository.UsuarioRepository;
 import br.com.ecommerce.mercadolivre.storage.StorageFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +25,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/produto")
+@RequestMapping("/v1/produtos")
 public class ProdutoController {
+
+    private static Logger logger = LoggerFactory.getLogger(ProdutoController.class);
 
     @PersistenceContext
     private EntityManager manager;

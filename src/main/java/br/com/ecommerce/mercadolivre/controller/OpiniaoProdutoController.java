@@ -6,6 +6,8 @@ import br.com.ecommerce.mercadolivre.domain.model.Produto;
 import br.com.ecommerce.mercadolivre.domain.model.Usuario;
 import br.com.ecommerce.mercadolivre.domain.request.OpiniaoProdutoRequest;
 import br.com.ecommerce.mercadolivre.repository.UsuarioRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,8 +21,10 @@ import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/v1/produto")
+@RequestMapping("/v1/produtos")
 public class OpiniaoProdutoController {
+
+    private static Logger logger = LoggerFactory.getLogger(OpiniaoProdutoController.class);
 
     @PersistenceContext
     private EntityManager manager;
@@ -34,7 +38,7 @@ public class OpiniaoProdutoController {
     // +1 OpiniaoProdutoRequest
     public ResponseEntity<?> criaOpiniaoSobreProduto(@PathVariable Long id,
                                                      @RequestBody @Valid OpiniaoProdutoRequest opiniaoProdutoRequest,
-                                                     @AuthenticationPrincipal String usuarioLogado,
+                                                     @AuthenticationPrincipal String emailUsuarioLogado,
                                                      UriComponentsBuilder uriComponentsBuilder){
 
         // +1
@@ -42,7 +46,7 @@ public class OpiniaoProdutoController {
         // +1
         Assert.isTrue(produto!=null, "Produto não encontrado no banco de dados!!");
         // +1
-        Usuario usuario = usuarioRepository.findByLogin(usuarioLogado).get();
+        Usuario usuario = usuarioRepository.findByLogin(emailUsuarioLogado).get();
         // +1
         OpiniaoProduto opiniaoProduto = opiniaoProdutoRequest.toModel(produto, usuario);
 
@@ -51,7 +55,7 @@ public class OpiniaoProdutoController {
         manager.merge(produto);
 
         return ResponseEntity
-                .created(uriComponentsBuilder.path("/produto/{id}/opiniao/{idOpiniao}").buildAndExpand(1,1).toUri())
+                .created(uriComponentsBuilder.path("/produto/{id}/opiniao/{idOpiniao}").buildAndExpand(id,opiniaoProduto.getId()).toUri())
                 .build();
     }
 }
