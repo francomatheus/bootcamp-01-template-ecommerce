@@ -1,7 +1,5 @@
 package br.com.ecommerce.mercadolivre.domain.model;
 
-import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -9,7 +7,10 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "produto")
@@ -33,6 +34,8 @@ public class Produto {
     @NotNull
     @ManyToOne
     private Categoria categoria;
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private Set<ImagemProduto> imagemProduto = new HashSet<>();
 
     @ManyToOne @NotNull
     private Usuario usuario;
@@ -86,15 +89,32 @@ public class Produto {
         return usuario;
     }
 
+    public String donoDoProduto(){
+        return this.usuario.getLogin();
+    }
+
     @Override
     public String toString() {
         return "Produto{" +
-                "nome='" + nome + '\'' +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
                 ", preco=" + preco +
                 ", quantidadeDisponivel=" + quantidadeDisponivel +
+                ", instanteCadastro=" + instanteCadastro +
                 ", descricao='" + descricao + '\'' +
                 ", caracteristicaProduto=" + caracteristicaProduto +
                 ", categoria=" + categoria +
+                ", usuario=" + usuario +
                 '}';
+    }
+
+    public void adicionaImagemProduto(List<String> pathImagemProduto) {
+
+        Set<ImagemProduto> imagensProduto = pathImagemProduto.stream().map(path -> {
+            return new ImagemProduto(path, this);
+        }).collect(Collectors.toSet());
+
+        this.imagemProduto.addAll(imagensProduto);
+
     }
 }
