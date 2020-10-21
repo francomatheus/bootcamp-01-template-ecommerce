@@ -22,7 +22,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
+
+/**
+ * Carga intrinseca máxima permitida - 7
+ * Carga intrínseca da classe - 9
+ */
 
 @RestController
 @RequestMapping("/v1/produtos")
@@ -71,13 +75,6 @@ public class PerguntaController {
         MensagemEmail messagemEmail = new MensagemEmail(emailUsuarioLogado, produto.donoDoProduto(), perguntaSobreProduto.getTitulo());
 
         messagemEmail.enviarEmail(sendMail);
-
-
-        /**
-         * Apos adicionar pergunta na lista, enviar um email para o vendedor, com a pergunta e o link da pagina de venda
-         * Retornar a lista de perguntas.
-         *
-         */
 
 
         return ResponseEntity

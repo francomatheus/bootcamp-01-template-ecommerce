@@ -17,6 +17,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+/**
+ * Carga intrinseca máxima permitida - 7
+ * Carga intrínseca da classe - 3
+ */
+
 @RestController
 @RequestMapping("/v1/usuarios")
 public class UsuarioController {
@@ -28,12 +33,13 @@ public class UsuarioController {
 
     @PostMapping
     @Transactional
+    // +1
     public ResponseEntity<?> criaUsuario(@RequestBody @Validated UsuarioRequest usuarioRequest, UriComponentsBuilder uriComponentsBuilder){
-
+        // +1
         Usuario usuario = usuarioRequest.toModel();
 
         manager.persist(usuario);
-
+        // +1
         UsuarioResponseDto usuarioResponseDto = new UsuarioResponseDto(usuario);
 
         return ResponseEntity

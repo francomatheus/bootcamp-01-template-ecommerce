@@ -1,5 +1,6 @@
 package br.com.ecommerce.mercadolivre.domain.model;
 
+import br.com.ecommerce.mercadolivre.domain.response.DetalheProdutoCaracteristica;
 import br.com.ecommerce.mercadolivre.domain.response.PerguntaSobreProdutoResponseDto;
 
 import javax.persistence.*;
@@ -15,6 +16,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+/**
+ * Carga intrinseca máxima permitida - 9
+ * Carga intrínseca da classe - 22
+ */
 
 @Entity
 @Table(name = "produto")
@@ -34,18 +40,24 @@ public class Produto {
     private String descricao;
     @Size(min = 3) @NotNull
     @OneToMany(cascade = CascadeType.PERSIST)
+    // +1
     private Set<CaracteristicaProduto> caracteristicaProduto;
     @NotNull
     @ManyToOne
+    // +1
     private Categoria categoria;
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    // +1
     private Set<ImagemProduto> imagemProduto = new HashSet<>();
     @ManyToOne @NotNull
+    // +1
     private Usuario usuario;
     @Valid @NotNull
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    // +1
     private Set<OpiniaoProduto> opiniaoProduto = new HashSet<>();
-    @OneToMany(mappedBy = "produto",cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "produto",cascade = CascadeType.MERGE)
+    // +1
     private List<PerguntaSobreProduto> pergunta = new ArrayList<>();
 
     public Produto() {
@@ -112,12 +124,15 @@ public class Produto {
     public List<PerguntaSobreProduto> getPergunta() {
         return pergunta;
     }
-
+    // +1
     public List<PerguntaSobreProdutoResponseDto> listaDePerguntas(){
         return this.pergunta.stream()
+                // +1
                 .map(perguntaSobreProduto -> {
                     return new PerguntaSobreProdutoResponseDto(perguntaSobreProduto);
-                }).collect(Collectors.toList());
+                })
+                // +1
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -137,9 +152,13 @@ public class Produto {
 
     public void adicionaImagemProduto(List<String> pathImagemProduto) {
 
-        Set<ImagemProduto> imagensProduto = pathImagemProduto.stream().map(path -> {
-            return new ImagemProduto(path, this);
-        }).collect(Collectors.toSet());
+        Set<ImagemProduto> imagensProduto = pathImagemProduto.stream()
+                // +1
+                .map(path -> {
+                    return new ImagemProduto(path, this);
+                })
+                // +1
+                .collect(Collectors.toSet());
 
         this.imagemProduto.addAll(imagensProduto);
 
@@ -157,5 +176,64 @@ public class Produto {
 
     public List<PerguntaSobreProduto> todasPerguntasSobreProduto(){
         return this.pergunta;
+    }
+
+    public double mediaNotas(){
+        return this.opiniaoProduto.stream()
+                // +1
+                .mapToDouble(opiniao -> {
+                    return opiniao.getNota();
+                })
+                .average()
+                // +1
+                .orElse(0);
+    }
+
+    public long numeroTotalDeNotas(){
+        return this.opiniaoProduto.stream()
+                // +1
+                .mapToDouble(opiniao -> {
+                    return opiniao.getNota();
+                }).count();
+    }
+
+    public Set<String> mapeiaPathImagens(){
+        return this.imagemProduto.stream()
+                // +1
+                .map(imagemProduto -> {
+                    return imagemProduto.getPathImagem();
+                })
+                // +1
+                .collect(Collectors.toSet());
+    }
+
+    public Set<DetalheProdutoOpiniao> mapeiaOpiniao(){
+        return this.opiniaoProduto.stream()
+                // +1
+                .map(opiniao -> {
+                    return new DetalheProdutoOpiniao(opiniao);
+                })
+                // +1
+                .collect(Collectors.toSet());
+    }
+
+    public Set<DetalheProdutoCaracteristica> mapeiaCaracteristica(){
+        return this.caracteristicaProduto.stream()
+                // +1
+                .map(caracteristicaProduto -> {
+                    return new DetalheProdutoCaracteristica(caracteristicaProduto);
+                })
+                // +1
+                .collect(Collectors.toSet());
+    }
+
+    public Set<String> mapeiaPerguntas() {
+        return this.pergunta.stream()
+                // +1
+                .map(perguntaSobreProduto -> {
+                    return perguntaSobreProduto.getTitulo();
+                })
+                // +1
+                .collect(Collectors.toSet());
     }
 }

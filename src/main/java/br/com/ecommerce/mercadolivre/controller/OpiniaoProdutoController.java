@@ -1,6 +1,5 @@
 package br.com.ecommerce.mercadolivre.controller;
 
-import br.com.ecommerce.mercadolivre.annotation.ValorValido;
 import br.com.ecommerce.mercadolivre.domain.model.OpiniaoProduto;
 import br.com.ecommerce.mercadolivre.domain.model.Produto;
 import br.com.ecommerce.mercadolivre.domain.model.Usuario;
@@ -19,6 +18,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
+
+/**
+ * Carga intrinseca máxima permitida - 7
+ * Carga intrínseca da classe - 6
+ */
 
 @RestController
 @RequestMapping("/v1/produtos")
@@ -40,6 +44,7 @@ public class OpiniaoProdutoController {
                                                      @RequestBody @Valid OpiniaoProdutoRequest opiniaoProdutoRequest,
                                                      @AuthenticationPrincipal String emailUsuarioLogado,
                                                      UriComponentsBuilder uriComponentsBuilder){
+        logger.info("Recebendo requisição para salvar opinião: {}", opiniaoProdutoRequest);
 
         // +1
         Produto produto = manager.find(Produto.class, id);
@@ -53,6 +58,8 @@ public class OpiniaoProdutoController {
         produto.adicionaOpiniaoProduto(opiniaoProduto);
 
         manager.merge(produto);
+
+        logger.info("Opinião salva no produto");
 
         return ResponseEntity
                 .created(uriComponentsBuilder.path("/produto/{id}/opiniao/{idOpiniao}").buildAndExpand(id,opiniaoProduto.getId()).toUri())

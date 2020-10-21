@@ -1,6 +1,5 @@
 package br.com.ecommerce.mercadolivre.controller;
 
-import br.com.ecommerce.mercadolivre.annotation.ValorValido;
 import br.com.ecommerce.mercadolivre.domain.model.Produto;
 import br.com.ecommerce.mercadolivre.domain.request.ProdutoImagemRequest;
 import br.com.ecommerce.mercadolivre.domain.request.ProdutoRequest;
@@ -24,6 +23,11 @@ import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * Carga intrinseca máxima permitida - 7
+ * Carga intrínseca da classe - 8
+ */
+
 @RestController
 @RequestMapping("/v1/produtos")
 public class ProdutoController {
@@ -46,15 +50,16 @@ public class ProdutoController {
     // +1
     public ResponseEntity<?> criaProduto(@RequestBody @Valid ProdutoRequest produtoRequest,
                                          UriComponentsBuilder uriComponentsBuilder,
-                                         @AuthenticationPrincipal String usuarioLogado){
+                                         @AuthenticationPrincipal String emailUsuarioLogado){
 
+        logger.info("Recebendo requisição para criar produto: {}",produtoRequest);
         // +1
-        Produto produto = produtoRequest.toModel(manager, usuarioRepository, usuarioLogado);
+        Produto produto = produtoRequest.toModel(manager, usuarioRepository, emailUsuarioLogado);
 
         manager.persist(produto);
         // +1
         ProdutoResponseDto produtoResponseDto = new ProdutoResponseDto(produto);
-
+        logger.info("Produto criado: {}", produto);
         return ResponseEntity
                 .created(uriComponentsBuilder.path("/v1/produto/{id}").buildAndExpand(produtoResponseDto.getId()).toUri())
                 .build();
@@ -62,16 +67,17 @@ public class ProdutoController {
 
     @PostMapping("/{id}/imagem")
     @Transactional
+    // +1
     public ResponseEntity<?> adicionaImagemProduto(@PathVariable Long id,
                                                    @Valid ProdutoImagemRequest imagemProduto,
                                                    UriComponentsBuilder uriComponentsBuilder,
-                                                   @AuthenticationPrincipal String usuarioLogado){
-
+                                                   @AuthenticationPrincipal String emailUsuarioLogado){
+        logger.info("Recebendo requisição para adicionar imagem ao produto de id: {}", id);
         Produto produto = manager.find(Produto.class, id);
         // +1
         Assert.isTrue(produto!=null, "Produto não encontrado no banco de dados!!");
         // +1
-        if(produto.donoDoProduto()!=usuarioLogado){
+        if(!emailUsuarioLogado.equals(produto.donoDoProduto())){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Usuário não pode alterar produto, pois não é dono !!!");
         }
 
@@ -80,7 +86,7 @@ public class ProdutoController {
         produto.adicionaImagemProduto(pathImagens);
 
         manager.merge(produto);
-
+        logger.info("imagem adicionada, com path: {} ao produto de id: {}", pathImagens, id);
         return ResponseEntity
                 .ok()
                 .build();

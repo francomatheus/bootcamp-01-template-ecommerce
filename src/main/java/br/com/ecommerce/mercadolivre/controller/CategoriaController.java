@@ -17,6 +17,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
+/**
+ * Carga intrinseca máxima permitida - 7
+ * Carga intrínseca da classe - 3
+ */
+
 @RestController
 @RequestMapping("/v1/categorias")
 public class CategoriaController {
@@ -28,10 +33,12 @@ public class CategoriaController {
 
     @PostMapping
     @Transactional
+    // +1
     public ResponseEntity<?> criaCategoria(@RequestBody @Valid CategoriaRequest categoriaRequest, UriComponentsBuilder uriComponentsBuilder){
-
+        // +1
         Categoria categoria = categoriaRequest.toModel(manager);
         manager.persist(categoria);
+        // +1
         CategoriaResponseDto categoriaResponseDto = new CategoriaResponseDto(categoria);
 
         return ResponseEntity
