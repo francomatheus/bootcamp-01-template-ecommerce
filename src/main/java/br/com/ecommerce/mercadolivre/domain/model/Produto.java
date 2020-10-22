@@ -2,13 +2,11 @@ package br.com.ecommerce.mercadolivre.domain.model;
 
 import br.com.ecommerce.mercadolivre.domain.response.DetalheProdutoCaracteristica;
 import br.com.ecommerce.mercadolivre.domain.response.PerguntaSobreProdutoResponseDto;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,7 +30,7 @@ public class Produto {
     private String nome;
     @NotNull @Positive
     private BigDecimal preco;
-    @NotNull @Positive
+    @NotNull @PositiveOrZero
     private Integer quantidadeDisponivel;
     @NotNull
     private LocalDateTime instanteCadastro = LocalDateTime.now();
@@ -235,5 +233,17 @@ public class Produto {
                 })
                 // +1
                 .collect(Collectors.toSet());
+    }
+
+    public boolean abateEstoque(@Positive Integer quantidadeCompra){
+        // +1
+        Assert.isTrue(quantidadeCompra>0, "Quantidade não pode ser menor que 0");
+        // +1
+        if (quantidadeCompra<=this.quantidadeDisponivel){
+            this.quantidadeDisponivel-=quantidadeCompra;
+            return true;
+        }
+
+        return false;
     }
 }
