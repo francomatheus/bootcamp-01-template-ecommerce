@@ -1,6 +1,7 @@
 package br.com.ecommerce.mercadolivre.configuration;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.Properties;
 
 @Component
+@Profile(value = "prod")
 public class MailConfig {
 
     @Bean
@@ -16,8 +18,8 @@ public class MailConfig {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-/*        mailSender.setUsername("my.gmail@gmail.com");
-        mailSender.setPassword("password");*/
+        mailSender.setUsername("my.gmail@gmail.com");
+        mailSender.setPassword("password");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

@@ -7,7 +7,7 @@ import br.com.ecommerce.mercadolivre.domain.model.Usuario;
 import br.com.ecommerce.mercadolivre.domain.request.PerguntaSobreProdutoRequest;
 import br.com.ecommerce.mercadolivre.domain.response.PerguntaSobreProdutoResponseDto;
 import br.com.ecommerce.mercadolivre.repository.UsuarioRepository;
-import br.com.ecommerce.mercadolivre.service.SendMail;
+import br.com.ecommerce.mercadolivre.service.email.SendMail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

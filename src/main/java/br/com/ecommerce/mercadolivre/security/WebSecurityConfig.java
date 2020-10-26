@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                     .antMatchers(HttpMethod.POST,"/v1/usuario").permitAll()
                     .antMatchers(HttpMethod.POST, "/v1/auth").permitAll()
+                    .antMatchers("/outro-sistema/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .cors()

@@ -1,4 +1,4 @@
-package br.com.ecommerce.mercadolivre.service;
+package br.com.ecommerce.mercadolivre.service.email;
 
 public interface SendMail {
 

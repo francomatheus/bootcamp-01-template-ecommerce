@@ -2,11 +2,10 @@ package br.com.ecommerce.mercadolivre.controller;
 
 import br.com.ecommerce.mercadolivre.domain.model.Compra;
 import br.com.ecommerce.mercadolivre.domain.model.Produto;
-import br.com.ecommerce.mercadolivre.domain.model.Usuario;
 import br.com.ecommerce.mercadolivre.domain.request.CompraFinalizadaRequest;
 import br.com.ecommerce.mercadolivre.repository.UsuarioRepository;
 import br.com.ecommerce.mercadolivre.service.GatewayPagamento;
-import br.com.ecommerce.mercadolivre.service.SendMail;
+import br.com.ecommerce.mercadolivre.service.email.SendMail;
 import br.com.ecommerce.mercadolivre.validators.VerificaEstoqueValidator;
 import io.jsonwebtoken.lang.Assert;
 import org.slf4j.Logger;
@@ -44,8 +43,8 @@ public class FinalizarCompraController {
     // +1
     private GatewayPagamento gatewayPagamento;
 
-    @Autowired
     // +1
+    @Autowired
     private SendMail sendMail;
 
     @InitBinder
@@ -66,16 +65,13 @@ public class FinalizarCompraController {
         Assert.isTrue(produto != null, "Produto não encontrado !!");
         boolean abateEstoqueValido = produto.abateEstoque(compraFinalizadaRequest.getQuantidade());
         // +1
-        Usuario usuario = usuarioRepository.findByLogin(emailUsuarioLogado).get();
+        if (!abateEstoqueValido){
+            return ResponseEntity.badRequest().build();
+        }
         // +1
-        Compra compra = compraFinalizadaRequest.toModel(produto, usuario);
+        Compra compra = compraFinalizadaRequest.toModel(produto,emailUsuarioLogado,usuarioRepository);
         manager.persist(compra);
         sendMail.send(emailUsuarioLogado, produto.donoDoProduto(), String.format("Desejo comprar o produto: %s", produto.getNome()));
-
-        // +1
-        if (!abateEstoqueValido){
-            return ResponseEntity.noContent().build();
-        }
 
         ResponseEntity<String> finalizandoCompraPagamento = gatewayPagamento.pagamento(compra, uriComponentsBuilder);
 

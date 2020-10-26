@@ -1,6 +1,6 @@
 package br.com.ecommerce.mercadolivre.domain.model;
 
-import br.com.ecommerce.mercadolivre.service.SendMail;
+import br.com.ecommerce.mercadolivre.service.email.SendMail;
 
 import javax.validation.constraints.NotBlank;
 

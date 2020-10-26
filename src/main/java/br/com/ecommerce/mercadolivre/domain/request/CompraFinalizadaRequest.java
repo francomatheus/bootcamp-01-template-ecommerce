@@ -6,7 +6,10 @@ import br.com.ecommerce.mercadolivre.domain.enums.TipoPagamento;
 import br.com.ecommerce.mercadolivre.domain.model.Compra;
 import br.com.ecommerce.mercadolivre.domain.model.Produto;
 import br.com.ecommerce.mercadolivre.domain.model.Usuario;
+import br.com.ecommerce.mercadolivre.repository.UsuarioRepository;
+import io.jsonwebtoken.lang.Assert;
 
+import javax.persistence.EntityManager;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -46,8 +49,13 @@ public class CompraFinalizadaRequest {
                 ", formaPagamento='" + formaPagamento + '\'' +
                 '}';
     }
+    // +2
+    public Compra toModel(Produto produto, String emailUsuarioLogado, UsuarioRepository usuarioRepository) {
 
-    public Compra toModel(Produto produto, Usuario usuario) {
+        // +1
+        Usuario usuario = usuarioRepository.findByLogin(emailUsuarioLogado).get();
+
+
         return new Compra(this.quantidade, this.formaPagamento, StatusCompra.INICIADA, usuario, produto);
     }
 }

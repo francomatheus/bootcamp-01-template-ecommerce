@@ -119,6 +119,10 @@ public class Produto {
         return this.usuario.getLogin();
     }
 
+    public Long donoProdutoId(){
+        return this.usuario.getId();
+    }
+
     public List<PerguntaSobreProduto> getPergunta() {
         return pergunta;
     }
