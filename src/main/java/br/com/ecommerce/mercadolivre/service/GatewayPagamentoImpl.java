@@ -16,7 +16,14 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Carga intrínseca máxima permitida - 7
+ * Carga intrínseca da classe - 6
+ */
+
+
 @Service
+// +1
 public class GatewayPagamentoImpl implements GatewayPagamento{
 
     private static Logger logger = LoggerFactory.getLogger(GatewayPagamentoImpl.class);

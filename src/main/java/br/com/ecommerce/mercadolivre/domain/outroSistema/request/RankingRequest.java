@@ -2,6 +2,11 @@ package br.com.ecommerce.mercadolivre.domain.outroSistema.request;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 0
+ */
+
 public class RankingRequest {
 
     @NotNull

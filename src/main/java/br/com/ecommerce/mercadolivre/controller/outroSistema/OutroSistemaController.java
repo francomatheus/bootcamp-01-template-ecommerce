@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+/**
+ * Carga intrínseca máxima permitida - 7
+ * Carga intrínseca da classe - 2
+ */
+
 @RestController
 @RequestMapping("/outro-sistema")
 public class OutroSistemaController {
@@ -19,21 +24,21 @@ public class OutroSistemaController {
     private static Logger logger = LoggerFactory.getLogger(OutroSistemaController.class);
 
     @PostMapping("/notas-fiscais")
+    // +1
     public ResponseEntity<?> criaNotaFiscal(@Valid @RequestBody NotaFiscalRequest notaFiscalRequest){
 
         logger.info("Valores Compra: {}",notaFiscalRequest.toString());
 
 
-        return ResponseEntity.ok().body("Testando nota Fiscal");
+        return ResponseEntity.ok().body("Nota fiscal emitida");
     }
 
     @PostMapping("/ranking")
+    // +1
     public ResponseEntity<?> ranking(@Valid @RequestBody RankingRequest rankingRequest){
 
         logger.info("Valores Compra: {} ",rankingRequest.toString());
 
-
-
-        return ResponseEntity.ok().body("Rankin recebido");
+        return ResponseEntity.ok().body("Ranking recebido");
     }
 }

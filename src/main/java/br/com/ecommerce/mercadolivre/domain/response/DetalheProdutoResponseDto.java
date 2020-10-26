@@ -8,6 +8,10 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.util.Set;
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 3
+ */
 
 public class DetalheProdutoResponseDto {
 
@@ -30,7 +34,7 @@ public class DetalheProdutoResponseDto {
 
     public DetalheProdutoResponseDto() {
     }
-
+    // +1
     public DetalheProdutoResponseDto(Produto produto) {
         this.pathImagens = produto.mapeiaPathImagens();
         this.nome = produto.getNome();

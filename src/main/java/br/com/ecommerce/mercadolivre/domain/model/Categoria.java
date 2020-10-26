@@ -3,6 +3,11 @@ package br.com.ecommerce.mercadolivre.domain.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 0
+ */
+
 @Entity
 @Table(name = "categoria")
 public class Categoria {

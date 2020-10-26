@@ -5,6 +5,11 @@ import br.com.ecommerce.mercadolivre.domain.model.CaracteristicaProduto;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 1
+ */
+
 public class CaraceristicaProdutoRequest {
 
     @NotBlank
@@ -16,7 +21,7 @@ public class CaraceristicaProdutoRequest {
         this.nome = nome;
         this.valor = valor;
     }
-
+    // +1
     public CaracteristicaProduto toModel(){
         return new CaracteristicaProduto(this.nome, this.valor);
     }

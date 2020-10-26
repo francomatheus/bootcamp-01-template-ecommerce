@@ -8,13 +8,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+/**
+ * Carga intrínseca máxima permitida - 7
+ * Carga intrínseca da classe - 3
+ */
+
+
 @Service
+// +1
 public class RankingImpl implements EventosCompraSucesso {
 
     @Autowired
+    // +1
     private Ranking ranking;
 
     @Override
+    // +1
     public void processa(Compra compra) {
         ranking.processa(Map.of("compraId",compra.getId(),"vendedorId",compra.vendedorId()));
     }

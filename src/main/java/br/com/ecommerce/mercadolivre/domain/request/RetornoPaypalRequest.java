@@ -1,7 +1,6 @@
 package br.com.ecommerce.mercadolivre.domain.request;
 
 import br.com.ecommerce.mercadolivre.consumer.RetornoGatwayPagamento;
-import br.com.ecommerce.mercadolivre.domain.enums.StatusCompraFinalizada;
 import br.com.ecommerce.mercadolivre.domain.enums.StatusTransacao;
 import br.com.ecommerce.mercadolivre.domain.model.Compra;
 import br.com.ecommerce.mercadolivre.domain.model.Transacao;
@@ -9,7 +8,11 @@ import br.com.ecommerce.mercadolivre.domain.model.Transacao;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 4
+ */
 
 public class RetornoPaypalRequest implements RetornoGatwayPagamento {
 
@@ -40,7 +43,9 @@ public class RetornoPaypalRequest implements RetornoGatwayPagamento {
         this.statusCompra = statusCompra;
     }
 
+    // +2
     public Transacao toTransacao(Compra compra){
+        // +2
         return new Transacao(this.statusCompra == 0 ? StatusTransacao.erro
                 : StatusTransacao.sucesso, this.transacaoId, compra);
     }

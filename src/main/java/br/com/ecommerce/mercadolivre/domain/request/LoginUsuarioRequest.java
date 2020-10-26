@@ -5,6 +5,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe -
+ */
+
 public class LoginUsuarioRequest {
 
     @NotBlank

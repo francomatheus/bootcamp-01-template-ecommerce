@@ -10,6 +10,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 2
+ */
+
 @Entity
 @Table(name = "opiniaoProduto")
 public class OpiniaoProduto {
@@ -25,8 +30,10 @@ public class OpiniaoProduto {
     @NotBlank
     private String descricao;
     @NotNull @ManyToOne(fetch = FetchType.LAZY)
+    // +1
     private Usuario usuarioByLogin;
     @NotNull @ManyToOne(fetch = FetchType.LAZY)
+    // +1
     private Produto produto;
 
     public OpiniaoProduto() {

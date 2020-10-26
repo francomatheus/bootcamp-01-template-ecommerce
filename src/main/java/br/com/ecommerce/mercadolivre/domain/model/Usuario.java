@@ -12,6 +12,11 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 0
+ */
+
 @Entity
 @Table(name = "usuario")
 public class Usuario implements UserDetails {

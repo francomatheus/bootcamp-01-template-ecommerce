@@ -2,10 +2,16 @@ package br.com.ecommerce.mercadolivre.domain.response;
 
 import br.com.ecommerce.mercadolivre.domain.model.Categoria;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 1
+ */
+
 public class CategoriaResponseDto {
 
     private Long id;
     private String nome;
+    // +1
     private Categoria categoria;
 
     public CategoriaResponseDto(Categoria categoria){

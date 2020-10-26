@@ -8,6 +8,11 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 2
+ */
+
 @Entity
 public class Transacao {
 
@@ -16,11 +21,13 @@ public class Transacao {
     private Long id;
 
     @NotNull
+    // +1
     private StatusTransacao statusCompra;
     @NotBlank
     private String transacaoId;
     @NotNull
     @ManyToOne
+    // +1
     private Compra compra;
     @NotNull
     private LocalDateTime instante;

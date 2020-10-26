@@ -7,7 +7,6 @@ import br.com.ecommerce.mercadolivre.domain.model.Produto;
 import br.com.ecommerce.mercadolivre.domain.model.Usuario;
 import br.com.ecommerce.mercadolivre.repository.UsuarioRepository;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
@@ -19,6 +18,11 @@ import java.math.BigDecimal;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 7
+ */
+
 public class ProdutoRequest {
 
     @NotBlank
@@ -29,6 +33,7 @@ public class ProdutoRequest {
     private Integer quantidadeDisponivel;
     @Size(min = 3)
     @NotNull
+    // +1
     private Set<@Valid CaraceristicaProdutoRequest> caracteristicaProduto;
     @NotBlank @Length(max = 1000)
     private String descricao;
@@ -92,15 +97,20 @@ public class ProdutoRequest {
         this.categoriaId = categoriaId;
     }
 
+    // +1
     public Produto toModel(EntityManager manager, UsuarioRepository usuarioRepository, String emailDoUsuarioLogado){
+        // +1
         Categoria categoria = manager.find(Categoria.class, this.categoriaId);
-
+        // +1
         Usuario usuarioByLogin = usuarioRepository.findByLogin(emailDoUsuarioLogado).get();
-
+        // +1
         Set<CaracteristicaProduto> caracteristicaProduto = this.caracteristicaProduto.stream()
+                // +1
                 .map(caraceristicaProdutoRequest -> {
                     return caraceristicaProdutoRequest.toModel();
-                }).collect(Collectors.toSet());
+                })
+                // +1
+                .collect(Collectors.toSet());
 
         return new Produto(this.nome,this.preco,this.quantidadeDisponivel,this.descricao,caracteristicaProduto, categoria, usuarioByLogin);
     }

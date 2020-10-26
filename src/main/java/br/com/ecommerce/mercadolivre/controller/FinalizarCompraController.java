@@ -22,6 +22,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
+/**
+ * Carga intrínseca máxima permitida - 7
+ * Carga intrínseca da classe - 9
+ */
+
 @RestController
 @RequestMapping("/v1/compra")
 public class FinalizarCompraController {

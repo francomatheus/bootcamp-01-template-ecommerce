@@ -14,6 +14,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 4
+ */
+
 public class CompraFinalizadaRequest {
 
     @ValorValido(className = Produto.class)
@@ -21,6 +26,7 @@ public class CompraFinalizadaRequest {
     @NotNull @Positive
     private Integer quantidade;
     @NotNull
+    // +1
     private TipoPagamento formaPagamento;
 
     public CompraFinalizadaRequest(Long produtoId, @NotNull @Positive Integer quantidade, @NotBlank TipoPagamento formaPagamento) {

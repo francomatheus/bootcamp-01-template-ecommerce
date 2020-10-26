@@ -5,8 +5,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+/**
+ * Carga intrínseca máxima permitida - 7
+ * Carga intrínseca da classe - 1
+ */
+
+
 @Service
 @Profile("dev")
+// +1
 public class MailSenderMock implements SendMail{
 
     private static Logger logger = LoggerFactory.getLogger(MailSenderMock.class);

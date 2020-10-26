@@ -5,6 +5,11 @@ import org.hibernate.validator.constraints.URL;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 1
+ */
+
 @Entity
 public class ImagemProduto {
 
@@ -13,6 +18,7 @@ public class ImagemProduto {
     @NotBlank @URL
     private String pathImagem;
     @ManyToOne(fetch = FetchType.LAZY)
+    // +1
     private Produto produto;
 
     public ImagemProduto() {

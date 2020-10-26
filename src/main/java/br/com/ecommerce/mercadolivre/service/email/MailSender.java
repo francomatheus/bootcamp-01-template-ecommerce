@@ -8,8 +8,15 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+/**
+ * Carga intrínseca máxima permitida - 7
+ * Carga intrínseca da classe - 1
+ */
+
+
 @Service
 @Profile("prod")
+// +1
 public class MailSender implements SendMail{
 
     private static Logger logger = LoggerFactory.getLogger(MailSender.class);

@@ -6,6 +6,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 2
+ */
+
 @Entity
 @Table(name = "perguntaProduto")
 public class PerguntaSobreProduto {
@@ -18,9 +23,11 @@ public class PerguntaSobreProduto {
     private LocalDateTime instantePergunta = LocalDateTime.now();
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
+    // +1
     private Produto produto;
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
+    // +1
     private Usuario usuario;
 
     public PerguntaSobreProduto() {

@@ -7,6 +7,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 1
+ */
+
 public class UsuarioRequest {
 
     @NotBlank
@@ -22,7 +27,7 @@ public class UsuarioRequest {
         this.login = login;
         this.senha = senha;
     }
-
+    // +1
     public Usuario toModel(){
         return new Usuario(this.login, this.senha);
     }

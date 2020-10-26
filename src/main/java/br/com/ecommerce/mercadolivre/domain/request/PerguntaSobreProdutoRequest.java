@@ -6,6 +6,11 @@ import br.com.ecommerce.mercadolivre.domain.model.Usuario;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 3
+ */
+
 public class PerguntaSobreProdutoRequest {
 
     @NotBlank
@@ -32,7 +37,7 @@ public class PerguntaSobreProdutoRequest {
                 "titulo='" + titulo + '\'' +
                 '}';
     }
-
+    // +3
     public PerguntaSobreProduto toModel(Produto produto, Usuario usuario) {
         return new PerguntaSobreProduto(this.titulo, produto, usuario);
     }

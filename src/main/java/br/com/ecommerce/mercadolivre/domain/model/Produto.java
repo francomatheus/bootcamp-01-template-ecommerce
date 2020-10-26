@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 /**
  * Carga intrinseca máxima permitida - 9
- * Carga intrínseca da classe - 22
+ * Carga intrínseca da classe - 24
  */
 
 @Entity

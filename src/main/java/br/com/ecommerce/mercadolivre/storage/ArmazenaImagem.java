@@ -7,22 +7,24 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Carga intrínseca máxima permitida - 7
+ * Carga intrínseca da classe - 3
+ */
+
 @Service
 public class ArmazenaImagem implements StorageFile {
 
-//    @Autowired
-//    private AmazonS3 amazonS3;
 
     private static final String BUCKET="produto-imagem";
 
+    // +1
     public List<String> salvaImagem(@Valid ProdutoImagemRequest imagensProduto) {
         List<String> imagemProdutos = new ArrayList<>();
+        // +1
         try {
 
             imagensProduto.getImagemProduto().forEach(imagemProduto -> {
-//                amazonS3.putObject(new PutObjectRequest(BUCKET,imagemProduto.getOriginalFilename(),
-//                        imagemProduto.getInputStream(),null)
-//                        .withCannedAcl(CannedAccessControlList.PublicRead));
 
                 String pathImage = "http://s3.amazonaws.com/" + BUCKET + "/" + imagemProduto.getOriginalFilename();
                 imagemProdutos.add(pathImage);
@@ -30,7 +32,9 @@ public class ArmazenaImagem implements StorageFile {
 
             return imagemProdutos;
 
-        } catch (IllegalStateException e) {
+        }
+        // +1
+        catch (IllegalStateException e) {
             throw new RuntimeException(e);
         }
     }

@@ -9,6 +9,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 4
+ */
+
 public class ProdutoResponseDto {
 
     private Long id;
@@ -17,10 +22,13 @@ public class ProdutoResponseDto {
     private Integer quantidadeDisponivel;
     private LocalDateTime instanteCadastro = LocalDateTime.now();
     private String descricao;
+    // +1
     private Set<CaracteristicaProduto> caracteristicaProduto;
+    // +1
     private Categoria categoria;
+    // +1
     private Usuario usuario;
-
+    // +1
     public ProdutoResponseDto(Produto produto) {
         this.id = produto.getId();
         this.nome = produto.getNome();

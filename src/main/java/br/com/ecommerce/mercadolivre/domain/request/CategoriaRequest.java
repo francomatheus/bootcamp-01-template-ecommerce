@@ -8,6 +8,11 @@ import javax.persistence.EntityManager;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 2
+ */
+
 public class CategoriaRequest {
 
     @NotBlank
@@ -21,9 +26,10 @@ public class CategoriaRequest {
         this.nome = nome;
         this.categoriaMaeId = categoriaMaeId;
     }
-
+    // +1
     public Categoria toModel(EntityManager manager){
         Categoria categoria = new Categoria(this.nome);
+        // +1
         if (this.categoriaMaeId != null){
             Categoria categoriaMae = manager.find(Categoria.class, this.categoriaMaeId);
             categoria.setCategoriaMae(categoriaMae);

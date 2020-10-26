@@ -2,6 +2,11 @@ package br.com.ecommerce.mercadolivre.domain.model;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 0
+ */
+
 public class DetalheProdutoOpiniao {
 
     private Integer nota;

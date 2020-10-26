@@ -87,8 +87,6 @@ public class ProdutoController {
 
         manager.merge(produto);
         logger.info("imagem adicionada, com path: {} ao produto de id: {}", pathImagens, id);
-        return ResponseEntity
-                .ok()
-                .build();
+        return ResponseEntity.ok().build();
     }
 }

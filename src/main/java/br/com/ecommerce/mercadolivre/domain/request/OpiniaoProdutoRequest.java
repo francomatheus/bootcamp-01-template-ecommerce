@@ -10,6 +10,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Carga intrínseca máxima permitida - 9
+ * Carga intrínseca da classe - 3
+ */
+
 public class OpiniaoProdutoRequest {
 
     @Min(1) @Max(5)
@@ -46,7 +51,7 @@ public class OpiniaoProdutoRequest {
                 ", descricao='" + descricao + '\'' +
                 '}';
     }
-
+    // +3
     public OpiniaoProduto toModel(Produto produto, Usuario usuario){
 
         return new OpiniaoProduto(this.nota, this.titulo, this.descricao, usuario, produto);
